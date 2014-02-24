@@ -1,0 +1,7 @@
+    name: MCBall
+    main: me.purpleanarchist.mcball.Main
+    version: 1.1
+    description: plugin desc.
+    commands:
+      ball:
+        description: The base command for MCBall!
