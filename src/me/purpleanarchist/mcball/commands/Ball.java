@@ -82,7 +82,7 @@ public class Ball implements CommandExecutor {
 					return false;
 				}
 				if (args[0].equalsIgnoreCase("setend")) {
-					ArenaManager.getManager().SetEnd(p.getLocation());
+					ArenaManager.getManager().setEnd(p.getLocation());
 					Util.sendMessage(p, "set the end to MC Ball ");
 					return false;
 				} else {
@@ -140,13 +140,13 @@ public class Ball implements CommandExecutor {
 					return false;
 				}
 				if (args[0].equalsIgnoreCase("remove")) {
-					ArenaManager.getManager().RemoveArena(p, args[1]);
+					ArenaManager.getManager().removeArena(p, args[1]);
 					Util.sendMessage(p, "Removed that MC Ball.");
 					return false;
 				}
 				if (args[0].equalsIgnoreCase("setstart")) {
 					ArenaManager.getManager()
-							.SetStart(args[1], p.getLocation());
+							.setStart(args[1], p.getLocation());
 					Util.sendMessage(p, "set the start to MC Ball " + args[1]);
 					return false;
 				}

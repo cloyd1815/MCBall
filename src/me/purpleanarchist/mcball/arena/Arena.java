@@ -13,9 +13,9 @@ public class Arena {
 	public static ArrayList<Arena> arenaObjects = new ArrayList<Arena>();
 
 	// Some fields we want each Arena object to store:
-	private Location startLocation, endLocation;
+	private Location joinLocation, endLocation, blueBasket, redBasket, redSpawn, blueSpawn;
 
-	private String name, team1, team2;
+	private String name;
 	private ArrayList<String> players = new ArrayList<String>();
 
 	private int maxPlayers;
@@ -24,26 +24,26 @@ public class Arena {
 
 	// Now for a Constructor:
 	public Arena(String arenaName, Location startLocation,
-			Location endLocation, int maxPlayers, String team1, String team2) {
+			Location endLocation, Location redBasket, Location blueBasket, Location redSpawn, Location blueSpawn, int maxPlayers) {
 		// Lets initalize it all:
 		this.name = arenaName;
-		this.startLocation = startLocation;
+		this.blueSpawn = blueSpawn;
+		this.redSpawn = redSpawn;
+		this.joinLocation = startLocation;
 		this.endLocation = endLocation;
 		this.maxPlayers = maxPlayers;
-		this.team1 = team1;
-		this.team2 = team2;
 
 		// Now lets add this object to the list of objects:
 		arenaObjects.add(this);
 
 	}
 
-	public Location getStartLocation() {
-		return this.startLocation;
+	public Location getJoinLocation() {
+		return this.joinLocation;
 	}
 
-	public void setStartLocation(Location startLocation) {
-		this.startLocation = startLocation;
+	public void setJoinLocation(Location startLocation) {
+		this.joinLocation = startLocation;
 	}
 
 	public Location getEndLocation() {
@@ -52,6 +52,22 @@ public class Arena {
 
 	public void setEndLocation(Location endLocation) {
 		this.endLocation = endLocation;
+	}
+
+	public Location getRedSpawn() {
+		return redSpawn;
+	}
+
+	public void setRedSpawn(Location redSpawn) {
+		this.redSpawn = redSpawn;
+	}
+
+	public Location getBlueSpawn() {
+		return blueSpawn;
+	}
+
+	public void setBlueSpawn(Location blueSpawn) {
+		this.blueSpawn = blueSpawn;
 	}
 
 	public String getName() {
@@ -74,20 +90,20 @@ public class Arena {
 		return this.players;
 	}
 
-	public String getTeam1() {
-		return team1;
+	public Location getBlueBasket() {
+		return blueBasket;
 	}
 
-	public void setTeam1(String team1) {
-		this.team1 = team1;
+	public void setBlueBasket(Location blueBasket) {
+		this.blueBasket = blueBasket;
 	}
 
-	public String getTeam2() {
-		return team2;
+	public Location getRedBasket() {
+		return redBasket;
 	}
 
-	public void setTeam2(String team2) {
-		this.team2 = team2;
+	public void setRedBasket(Location redBasket) {
+		this.redBasket = redBasket;
 	}
 
 	// And finally, some booleans:

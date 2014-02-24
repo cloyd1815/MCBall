@@ -39,7 +39,7 @@ public class ArenaManager {
 	public void addPlayers(Player player, String arenaName) {
 		if (getArena(arenaName) != null) {
 			Arena arena = getArena(arenaName);
-			if (arena.getStartLocation() != null
+			if (arena.getJoinLocation() != null
 					&& arena.getEndLocation() != null) {
 				if (!arena.isFull()) {
 					if (!arena.isInGame()) {
@@ -49,19 +49,22 @@ public class ArenaManager {
 							player.setSaturation(1000000);
 							player.setLevel(0);
 							player.getInventory().clear();
-							player.teleport(arena.getStartLocation());
+							player.teleport(arena.getJoinLocation());
 							if (player.getGameMode() == GameMode.CREATIVE)
 								player.setGameMode(GameMode.SURVIVAL);
 							arena.getPlayers().add(player.getName());
 							arena.sendMessage(ChatColor.GREEN
-									+ player.getName()
-									+ ChatColor.GREEN + " has joined the game!");
+									+ player.getName() + ChatColor.GREEN
+									+ " has joined the game!");
 							if (arena.getPlayers().size() == 2) {
 								@SuppressWarnings("unused")
-								BukkitTask countdown = new Countdown(plugin, 60, arenaName).runTaskTimer(plugin, 0, 20);
+								BukkitTask countdown = new Countdown(plugin,
+										60, arenaName).runTaskTimer(plugin, 0,
+										20);
 							} else if (arena.getPlayers().size() < 2) {
 								@SuppressWarnings("unused")
-								BukkitTask message = new MessageSpam(plugin, arena).runTaskTimer(plugin, 0, 20*10);
+								BukkitTask message = new MessageSpam(plugin,
+										arena).runTaskTimer(plugin, 0, 20 * 10);
 							}
 						} else {
 							Util.sendMessage(player,
@@ -114,10 +117,11 @@ public class ArenaManager {
 			for (String s : arena.getPlayers()) {
 				Player player = Bukkit.getPlayer(s);
 
-				player.teleport(arena.getStartLocation());
+				player.teleport(arena.getJoinLocation());
 			}
 			@SuppressWarnings("unused")
-			BukkitTask playtime = new PlayTime(plugin, 60*5, arenaName).runTaskTimer(plugin, 0, 20);
+			BukkitTask playtime = new PlayTime(plugin, 60 * 5, arenaName)
+					.runTaskTimer(plugin, 0, 20);
 		}
 	}
 
@@ -149,27 +153,43 @@ public class ArenaManager {
 				double startX = fc.getDouble("arenas." + keys + ".startX");
 				double startY = fc.getDouble("arenas." + keys + ".startY");
 				double startZ = fc.getDouble("arenas." + keys + ".startZ");
+				double redX = fc.getDouble("arenas." + keys + ".redX");
+				double redY = fc.getDouble("arenas." + keys + ".redY");
+				double redZ = fc.getDouble("arenas." + keys + ".redZ");
+				double blueX = fc.getDouble("arenas." + keys + ".blueX");
+				double blueY = fc.getDouble("arenas." + keys + ".blueY");
+				double blueZ = fc.getDouble("arenas." + keys + ".blueZ");
+				double rbX = fc.getDouble("arenas." + keys + ".rbX");
+				double rbY = fc.getDouble("arenas." + keys + ".rbY");
+				double rbZ = fc.getDouble("arenas." + keys + ".rbZ");
+				double bbX = fc.getDouble("arenas." + keys + ".bbX");
+				double bbY = fc.getDouble("arenas." + keys + ".bbY");
+				double bbZ = fc.getDouble("arenas." + keys + ".bbZ");
+
 				double endX = fc.getDouble("endX");
 				double endY = fc.getDouble("endY");
 				double endZ = fc.getDouble(".endZ");
-				String team1 = fc.getString("arenas." + keys + ".team1");
-				String team2 = fc.getString("arenas." + keys + ".team2");
 				int maxPlayers = fc.getInt("arenas." + keys + ".maxPlayers");
 
+				Location blueSpawn = new Location(world, blueX, blueY, blueZ);
+				Location redSpawn = new Location(world, redX, redY, redZ);
+				Location blueBasket = new Location(world, bbX, bbY, bbZ);
+				Location redBasket = new Location(world, rbX, rbY, rbZ);
 				Location startLocation = new Location(world, startX, startY,
 						startZ);
 				Location endLocation = new Location(world, endX, endY, endZ);
 
 				@SuppressWarnings("unused")
 				Arena arena = new Arena(keys, startLocation, endLocation,
-						maxPlayers, team1, team2);
+						redBasket, blueBasket, redSpawn, blueSpawn, maxPlayers);
 			}
 		}
 	}
 
 	public void createArena(String arenaName, int maxPlayers) {
 		@SuppressWarnings("unused")
-		Arena arena = new Arena(arenaName, null, null, maxPlayers, null, null);
+		Arena arena = new Arena(arenaName, null, null, null, null, null, null,
+				maxPlayers);
 		ConfigurationAPI.getConfig(plugin, "arenas.yml").set(
 				"arenas." + arenaName, null);
 		String path = "arenas." + arenaName + ".";
@@ -179,7 +199,7 @@ public class ArenaManager {
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
-	public void SetEnd(Location joinLocation) {
+	public void setEnd(Location joinLocation) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		fc.set("endX", joinLocation.getX());
 		fc.set("endY", joinLocation.getY());
@@ -187,35 +207,67 @@ public class ArenaManager {
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
-	public void SetStart(String arenaName, Location blueLocation) {
+	public void setStart(String arenaName, Location blueLocation) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		String path = "arenas." + arenaName + ".";
 		fc.set(path + "startX", blueLocation.getX());
 		fc.set(path + "startY", blueLocation.getY());
 		fc.set(path + "startZ", blueLocation.getZ());
 		Arena arena = getArena(arenaName);
-		arena.setStartLocation(blueLocation);
+		arena.setJoinLocation(blueLocation);
+		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
+	}
+	
+	public void setRed(String arenaName, Location redLocation) {
+		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
+		String path = "arenas." + arenaName + ".";
+		fc.set(path + "redX", redLocation.getX());
+		fc.set(path + "redY", redLocation.getY());
+		fc.set(path + "redZ", redLocation.getZ());
+		Arena arena = getArena(arenaName);
+		arena.setJoinLocation(redLocation);
+		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
+	}	
+	
+	public void setBlue(String arenaName, Location blueLocation) {
+		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
+		String path = "arenas." + arenaName + ".";
+		fc.set(path + "blueX", blueLocation.getX());
+		fc.set(path + "blueY", blueLocation.getY());
+		fc.set(path + "blueZ", blueLocation.getZ());
+		Arena arena = getArena(arenaName);
+		arena.setJoinLocation(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
-	public void RemoveArena(Player player, String arenaName) {
+	public void setBlueBasket(String arenaName, Location blueLocation) {
+		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
+		String path = "arenas." + arenaName + ".";
+		fc.set(path + "bbX", blueLocation.getX());
+		fc.set(path + "bbY", blueLocation.getY());
+		fc.set(path + "bbZ", blueLocation.getZ());
+		Arena arena = getArena(arenaName);
+		arena.setJoinLocation(blueLocation);
+		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
+	}
+
+	public void setRedBasket(String arenaName, Location blueLocation) {
+		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
+		String path = "arenas." + arenaName + ".";
+		fc.set(path + "rbX", blueLocation.getX());
+		fc.set(path + "rbY", blueLocation.getY());
+		fc.set(path + "rbZ", blueLocation.getZ());
+		Arena arena = getArena(arenaName);
+		arena.setJoinLocation(blueLocation);
+		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
+	}
+
+	public void removeArena(Player player, String arenaName) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		String path = "arenas." + arenaName;
 		fc.set(path, null);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 		Util.sendMessage(player, "Arena removed.");
 		Arena.arenaObjects.remove(getArena(arenaName));
-	}
-	
-	public void setTeam(int teamNumber, String arenaName, String name) {
-		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
-		String path = "arenas." + arenaName;
-		if (teamNumber == 1) {
-			String newname = name.substring(0, 15);
-			fc.set(path + ".team1", newname);
-		} else if (teamNumber == 2) {
-			String newname = name.substring(0, 15);
-			fc.set(path + ".team2", newname);
-		}
 	}
 }
