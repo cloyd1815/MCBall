@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
@@ -57,5 +58,22 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onEnityDeath(EntityDeathEvent e) {
 		e.getEntity().getLocation();
+	}
+	
+	@EventHandler
+	public void onPlayerClick(PlayerInteractEntityEvent e) {
+		Player player = e.getPlayer();
+		if (e.getRightClicked() instanceof Player) {
+			Player playere = (Player) e.getRightClicked();
+			for (Arena arena : Arena.arenaObjects) {
+				if (arena.getBlue().contains(player) && arena.getBlue().contains(playere)) {
+					//team pass ball
+				} else if (arena.getRed().contains(player) && arena.getRed().contains(playere)) {
+					//team pass ball
+				} else if (arena.getPlayers().contains(playere) && arena.getPlayers().contains(player)) {
+					//steal ball
+				}
+			}
+		}
 	}
 }

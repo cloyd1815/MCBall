@@ -17,7 +17,9 @@ public class Arena {
 
 	private String name;
 	private ArrayList<String> players = new ArrayList<String>();
-
+	private ArrayList<String> red = new ArrayList<String>();
+	private ArrayList<String> blue = new ArrayList<String>();
+	
 	private int maxPlayers;
 
 	private boolean inGame = false;
@@ -88,6 +90,14 @@ public class Arena {
 
 	public ArrayList<String> getPlayers() {
 		return this.players;
+	}
+
+	public ArrayList<String> getBlue() {
+		return blue;
+	}
+
+	public ArrayList<String> getRed() {
+		return red;
 	}
 
 	public Location getBlueBasket() {
