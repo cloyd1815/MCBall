@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.util.Vector;
 
 public class PlayerListener implements Listener {
@@ -67,12 +68,28 @@ public class PlayerListener implements Listener {
 			Player playere = (Player) e.getRightClicked();
 			for (Arena arena : Arena.arenaObjects) {
 				if (arena.getBlue().contains(player) && arena.getBlue().contains(playere)) {
-					//team pass ball
+					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
+						//pass ball
+					}
 				} else if (arena.getRed().contains(player) && arena.getRed().contains(playere)) {
-					//team pass ball
+					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
+						//team pass ball
+					}
 				} else if (arena.getPlayers().contains(playere) && arena.getPlayers().contains(player)) {
-					//steal ball
+					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
+						//steal ball
+					}
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void playerItemChange(PlayerItemHeldEvent e) {
+		Player player = e.getPlayer();
+		for (Arena arena : Arena.arenaObjects) {
+			if (arena.getPlayers().contains(player)) {
+				e.setCancelled(true);
 			}
 		}
 	}

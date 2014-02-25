@@ -117,6 +117,7 @@ public class ArenaManager {
 			for (String s : arena.getPlayers()) {
 				Player player = Bukkit.getPlayer(s);
 
+				player.getInventory().setHeldItemSlot(0);
 				player.teleport(arena.getJoinLocation());
 			}
 			@SuppressWarnings("unused")
