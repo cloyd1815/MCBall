@@ -25,9 +25,9 @@ public class PlayerListener implements Listener {
 			Player player = e.getPlayer();
 			for (Arena arena : Arena.arenaObjects) {
 				if (arena.getPlayers().contains(player.getName())) {
-					double x = player.getLocation().getX();
+					double x = player.getLocation().getX() + 1;
 					double y = player.getLocation().getY() + 1;
-					double z = player.getLocation().getZ();
+					double z = player.getLocation().getZ() + 1;
 					Vector vector = player.getLocation().getDirection()
 							.multiply(2);
 					Location spawnLoc = new Location(player.getWorld(), x, y, z);
