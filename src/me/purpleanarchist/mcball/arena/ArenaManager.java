@@ -39,8 +39,7 @@ public class ArenaManager {
 	public void addPlayers(Player player, String arenaName) {
 		if (getArena(arenaName) != null) {
 			Arena arena = getArena(arenaName);
-			if (arena.getJoinLocation() != null
-					&& arena.getEndLocation() != null) {
+			if (arena.getEndLocation() != null) {
 				if (!arena.isFull()) {
 					if (!arena.isInGame()) {
 						if (!arena.getPlayers().contains(player.getName())) {

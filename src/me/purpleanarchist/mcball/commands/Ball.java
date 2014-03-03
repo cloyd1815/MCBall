@@ -49,10 +49,10 @@ public class Ball implements CommandExecutor {
 							p.sendMessage("§4" + list);
 							p.sendMessage("§4Use /ball info " + list
 									+ " - to see more info!");
-							return true;
+							continue;
 						} else {
 							p.sendMessage("§a" + list);
-							return true;
+							continue;
 						}
 					}
 					return false;

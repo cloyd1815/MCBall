@@ -1,5 +1,6 @@
 package me.purpleanarchist.mcball;
 
+import me.purpleanarchist.mcball.arena.ArenaManager;
 import me.purpleanarchist.mcball.commands.Ball;
 import me.purpleanarchist.mcball.listener.PlayerListener;
 
@@ -29,6 +30,7 @@ public class Main extends JavaPlugin {
 		obj = board.registerNewObjective("score", "dummy");
 		red = board.registerNewTeam("Red");
 		blue = board.registerNewTeam("Blue");
+		ArenaManager.getManager().loadArenas();
 	}
 	
 	@Override
