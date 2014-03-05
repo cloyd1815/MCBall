@@ -195,7 +195,8 @@ public class ArenaManager {
 		String path = "arenas." + arenaName + ".";
 		ConfigurationAPI.getConfig(plugin, "arenas.yml").set(
 				path + "maxPlayers", maxPlayers);
-
+		new Team(TeamColor.BLUE, null, null, arenaName);
+		new Team(TeamColor.RED, null, null, arenaName);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
@@ -224,8 +225,7 @@ public class ArenaManager {
 		fc.set(path + "redX", redLocation.getX());
 		fc.set(path + "redY", redLocation.getY());
 		fc.set(path + "redZ", redLocation.getZ());
-		Arena arena = getArena(arenaName);
-		arena.setJoinLocation(redLocation);
+		TeamManager.getManager().getTeam(TeamColor.RED).setSpawn(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}	
 	
@@ -235,8 +235,7 @@ public class ArenaManager {
 		fc.set(path + "blueX", blueLocation.getX());
 		fc.set(path + "blueY", blueLocation.getY());
 		fc.set(path + "blueZ", blueLocation.getZ());
-		Arena arena = getArena(arenaName);
-		arena.setJoinLocation(blueLocation);
+		TeamManager.getManager().getTeam(TeamColor.BLUE).setSpawn(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
@@ -246,19 +245,17 @@ public class ArenaManager {
 		fc.set(path + "bbX", blueLocation.getX());
 		fc.set(path + "bbY", blueLocation.getY());
 		fc.set(path + "bbZ", blueLocation.getZ());
-		Arena arena = getArena(arenaName);
-		arena.setJoinLocation(blueLocation);
+		TeamManager.getManager().getTeam(TeamColor.BLUE).setBasket(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
-	public void setRedBasket(String arenaName, Location blueLocation) {
+	public void setRedBasket(String arenaName, Location redLocation) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		String path = "arenas." + arenaName + ".";
-		fc.set(path + "rbX", blueLocation.getX());
-		fc.set(path + "rbY", blueLocation.getY());
-		fc.set(path + "rbZ", blueLocation.getZ());
-		Arena arena = getArena(arenaName);
-		arena.setJoinLocation(blueLocation);
+		fc.set(path + "rbX", redLocation.getX());
+		fc.set(path + "rbY", redLocation.getY());
+		fc.set(path + "rbZ", redLocation.getZ());
+		TeamManager.getManager().getTeam(TeamColor.BLUE).setBasket(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 

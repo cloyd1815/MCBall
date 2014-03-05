@@ -1,6 +1,8 @@
 package me.purpleanarchist.mcball.listener;
 
+import me.purpleanarchist.mcball.Main;
 import me.purpleanarchist.mcball.arena.Arena;
+import me.purpleanarchist.mcball.run.EntityCheck;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,10 +18,12 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 public class PlayerListener implements Listener {
-
+	private Plugin plugin = Main.getPlugin();
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onEggThrow(PlayerInteractEvent e) {
 		if (e.getItem() != null) {
@@ -40,6 +44,8 @@ public class PlayerListener implements Listener {
 									Chicken.class);
 							c.setVelocity(vector);
 							c.setHealth(0.0);
+							@SuppressWarnings("unused")
+							BukkitTask check = new EntityCheck(plugin, c).runTaskTimer(plugin, 0, 10);
 						}
 					}
 				}
