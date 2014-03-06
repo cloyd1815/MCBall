@@ -13,24 +13,20 @@ public class Arena {
 	public static ArrayList<Arena> arenaObjects = new ArrayList<Arena>();
 
 	// Some fields we want each Arena object to store:
-	private Location joinLocation, endLocation, blueBasket, redBasket, redSpawn, blueSpawn;
+	private Location joinLocation, endLocation;
 
 	private String name;
 	private ArrayList<String> players = new ArrayList<String>();
-	private ArrayList<String> red = new ArrayList<String>();
-	private ArrayList<String> blue = new ArrayList<String>();
-	
+
 	private int maxPlayers;
 
 	private boolean inGame = false;
 
 	// Now for a Constructor:
 	public Arena(String arenaName, Location startLocation,
-			Location endLocation, Location redBasket, Location blueBasket, Location redSpawn, Location blueSpawn, int maxPlayers) {
+			Location endLocation, int maxPlayers) {
 		// Lets initalize it all:
 		this.name = arenaName;
-		this.blueSpawn = blueSpawn;
-		this.redSpawn = redSpawn;
 		this.joinLocation = startLocation;
 		this.endLocation = endLocation;
 		this.maxPlayers = maxPlayers;
@@ -56,22 +52,6 @@ public class Arena {
 		this.endLocation = endLocation;
 	}
 
-	public Location getRedSpawn() {
-		return redSpawn;
-	}
-
-	public void setRedSpawn(Location redSpawn) {
-		this.redSpawn = redSpawn;
-	}
-
-	public Location getBlueSpawn() {
-		return blueSpawn;
-	}
-
-	public void setBlueSpawn(Location blueSpawn) {
-		this.blueSpawn = blueSpawn;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -90,30 +70,6 @@ public class Arena {
 
 	public ArrayList<String> getPlayers() {
 		return this.players;
-	}
-
-	public ArrayList<String> getBlue() {
-		return blue;
-	}
-
-	public ArrayList<String> getRed() {
-		return red;
-	}
-
-	public Location getBlueBasket() {
-		return blueBasket;
-	}
-
-	public void setBlueBasket(Location blueBasket) {
-		this.blueBasket = blueBasket;
-	}
-
-	public Location getRedBasket() {
-		return redBasket;
-	}
-
-	public void setRedBasket(Location redBasket) {
-		this.redBasket = redBasket;
 	}
 
 	// And finally, some booleans:

@@ -2,6 +2,9 @@ package me.purpleanarchist.mcball.listener;
 
 import me.purpleanarchist.mcball.Main;
 import me.purpleanarchist.mcball.arena.Arena;
+import me.purpleanarchist.mcball.arena.Team;
+import me.purpleanarchist.mcball.arena.TeamColor;
+import me.purpleanarchist.mcball.arena.TeamManager;
 import me.purpleanarchist.mcball.run.EntityCheck;
 
 import org.bukkit.Location;
@@ -19,11 +22,11 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 public class PlayerListener implements Listener {
 	private Plugin plugin = Main.getPlugin();
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onEggThrow(PlayerInteractEvent e) {
 		if (e.getItem() != null) {
@@ -43,9 +46,7 @@ public class PlayerListener implements Listener {
 							Chicken c = player.getWorld().spawn(spawnLoc,
 									Chicken.class);
 							c.setVelocity(vector);
-							c.setHealth(0.0);
-							@SuppressWarnings("unused")
-							BukkitTask check = new EntityCheck(plugin, c).runTaskTimer(plugin, 0, 10);
+							new EntityCheck(plugin, c, arena.getName()).runTaskTimer(plugin, 0, 10);
 						}
 					}
 				}
@@ -60,9 +61,9 @@ public class PlayerListener implements Listener {
 				Player player = (Player) e.getEntity().getShooter();
 				for (Arena arena : Arena.arenaObjects) {
 					if (arena.getPlayers().contains(player.getName())) {
-						e.setCancelled(true);
 						player.getInventory().getItemInHand()
 								.setType(Material.AIR);
+						e.setCancelled(true);
 					}
 				}
 			}
@@ -80,18 +81,19 @@ public class PlayerListener implements Listener {
 		if (e.getRightClicked() instanceof Player) {
 			Player playere = (Player) e.getRightClicked();
 			for (Arena arena : Arena.arenaObjects) {
-				if (arena.getBlue().contains(player)
-						&& arena.getBlue().contains(playere)) {
+				Team red = TeamManager.getManager().getTeam(TeamColor.RED, arena.getName());
+				Team blue = TeamManager.getManager().getTeam(TeamColor.BLUE, arena.getName());
+				if (blue.getPlayers().contains(player)
+						&& blue.getPlayers().contains(playere)) {
 					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
 						// team pass ball
 					}
-				} else if (arena.getRed().contains(player)
-						&& arena.getRed().contains(playere)) {
+				} else if (red.getPlayers().contains(player)
+						&& red.getPlayers().contains(playere)) {
 					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
 						// team pass ball
 					}
-				} else if (arena.getPlayers().contains(playere)
-						&& arena.getPlayers().contains(player)) {
+				} else {
 					if (player.getInventory().getItemInHand().getType() == Material.EGG) {
 						// steal ball
 					}
