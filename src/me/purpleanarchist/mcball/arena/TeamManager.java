@@ -11,18 +11,18 @@ import org.bukkit.entity.Player;
 
 public class TeamManager {
 	private static TeamManager tm;
-	FileConfiguration fc = ConfigurationAPI.getConfig(Main.getPlugin(), "arenas.yml");
+	FileConfiguration fc = ConfigurationAPI.getConfig(Main.getPlugin(),
+			"arenas.yml");
+
 	public static TeamManager getManager() {
 		return tm;
 	}
 
 	public Team getTeam(TeamColor color, String arenaName) {
-		for (Team team : Team.teamObjects) {
-			for (Arena arena : Arena.arenaObjects) {
-				if (team.getArena() == arena.getName()) {
-					if (team.getColor() == color) {
-						return team;
-					}
+		if (ArenaManager.getManager().getArena(arenaName) != null) {
+			for (Team team : Team.teamObjects) {
+				if (team.getColor() == color && team.getArena().equals(ArenaManager.getManager().getArena(arenaName).getName())) {
+					return team;
 				}
 			}
 		}

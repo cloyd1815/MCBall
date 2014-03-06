@@ -10,17 +10,17 @@ public class Team {
 	private Location spawn, basket;
 	private int score;
 	private String arena;
-	
+
 	private ArrayList<String> players = new ArrayList<String>();
-	
+
 	public static ArrayList<Team> teamObjects = new ArrayList<Team>();
-	
+
 	public Team(TeamColor color, Location spawn, Location basket, String arena) {
-		this.setColor(color);
-		this.setBasket(basket);
-		this.setSpawn(spawn);
-		this.setArena(arena);
-		
+		this.color = color;
+		this.basket = basket;
+		this.spawn = spawn;
+		this.arena = arena;
+
 		teamObjects.add(this);
 	}
 

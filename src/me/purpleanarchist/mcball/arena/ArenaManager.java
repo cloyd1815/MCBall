@@ -180,8 +180,10 @@ public class ArenaManager {
 						startZ);
 				Location endLocation = new Location(world, endX, endY, endZ);
 				
-				new Team(TeamColor.RED, redSpawn, redBasket, keys);
-				new Team(TeamColor.BLUE, blueSpawn, blueBasket, keys);
+				@SuppressWarnings("unused")
+				Team red = new Team(TeamColor.RED, redSpawn, redBasket, keys);
+				@SuppressWarnings("unused")
+				Team blue = new Team(TeamColor.BLUE, blueSpawn, blueBasket, keys);
 
 				@SuppressWarnings("unused")
 				Arena arena = new Arena(keys, startLocation, endLocation,
