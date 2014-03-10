@@ -81,8 +81,8 @@ public class PlayerListener implements Listener {
 		if (e.getRightClicked() instanceof Player) {
 			Player playere = (Player) e.getRightClicked();
 			for (Arena arena : Arena.arenaObjects) {
-				Team red = TeamManager.getManager().getTeam(TeamColor.RED, arena.getName());
-				Team blue = TeamManager.getManager().getTeam(TeamColor.BLUE, arena.getName());
+				Team red = TeamManager.getManager().getTeam(TeamColor.RED, arena);
+				Team blue = TeamManager.getManager().getTeam(TeamColor.BLUE, arena);
 				if (blue.getPlayers().contains(player)
 						&& blue.getPlayers().contains(playere)) {
 					if (player.getInventory().getItemInHand().getType() == Material.EGG) {

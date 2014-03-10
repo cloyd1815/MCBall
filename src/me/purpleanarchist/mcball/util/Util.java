@@ -1,5 +1,7 @@
 package me.purpleanarchist.mcball.util;
 
+import me.purpleanarchist.mcball.arena.Arena;
+import me.purpleanarchist.mcball.arena.ArenaManager;
 import me.purpleanarchist.mcball.arena.Team;
 import me.purpleanarchist.mcball.arena.TeamColor;
 import me.purpleanarchist.mcball.arena.TeamManager;
@@ -19,8 +21,9 @@ public class Util {
 
 	public static void checkEntity(Entity e, String arenaName) {
 		Chicken entity = (Chicken) e;
-		Team blue = TeamManager.getManager().getTeam(TeamColor.BLUE, arenaName);
-		Team red = TeamManager.getManager().getTeam(TeamColor.RED, arenaName);
+		Arena arena = ArenaManager.getManager().getArena(arenaName);
+		Team blue = TeamManager.getManager().getTeam(TeamColor.BLUE, arena);
+		Team red = TeamManager.getManager().getTeam(TeamColor.RED, arena);
 		int bs = blue.getScore();
 		int rs = red.getScore();
 		

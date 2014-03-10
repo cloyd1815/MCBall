@@ -158,21 +158,36 @@ public class Ball implements CommandExecutor {
 					} else if (args[0].equalsIgnoreCase("redbasket")) {
 						for (Arena arena : Arena.arenaObjects) {
 							if (args[1].equalsIgnoreCase(arena.getName())) {
-								Team red = TeamManager.getManager().getTeam(
-										TeamColor.RED, arena.getName());
-								TeamManager.getManager().setBasket(red,
-										arena.getName(), p.getLocation());
-								Util.sendMessage(p, "Saved that locaion!");
+								for (Team team : Team.teamObjects) {
+									if (team.getArena().equals(arena.getName())) {
+										if (team.getColor().equals(
+												TeamColor.RED)) {
+											TeamManager.getManager().setBasket(
+													team, arena.getName(),
+													p.getLocation());
+											Util.sendMessage(p,
+													"Saved that locaion!");
+
+										}
+									}
+								}
 							}
 						}
 					} else if (args[0].equalsIgnoreCase("bluebasket")) {
 						for (Arena arena : Arena.arenaObjects) {
 							if (args[1].equalsIgnoreCase(arena.getName())) {
-								Team blue = TeamManager.getManager().getTeam(
-										TeamColor.BLUE, arena.getName());
-								TeamManager.getManager().setBasket(blue,
-										arena.getName(), p.getLocation());
-								Util.sendMessage(p, "Saved that locaion!");
+								for (Team team : Team.teamObjects) {
+									if (team.getArena().equals(arena.getName())) {
+										if (team.getColor().equals(
+												TeamColor.BLUE)) {
+											TeamManager.getManager().setBasket(
+													team, arena.getName(),
+													p.getLocation());
+											Util.sendMessage(p,
+													"Saved that locaion!");
+										}
+									}
+								}
 							}
 						}
 					} else {

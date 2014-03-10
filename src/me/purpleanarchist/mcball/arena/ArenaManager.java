@@ -230,7 +230,8 @@ public class ArenaManager {
 		fc.set(path + "redX", redLocation.getX());
 		fc.set(path + "redY", redLocation.getY());
 		fc.set(path + "redZ", redLocation.getZ());
-		TeamManager.getManager().getTeam(TeamColor.RED, arenaName).setSpawn(redLocation);
+		Arena arena = getArena(arenaName);
+		TeamManager.getManager().getTeam(TeamColor.RED, arena).setSpawn(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}	
 	
@@ -240,7 +241,8 @@ public class ArenaManager {
 		fc.set(path + "blueX", blueLocation.getX());
 		fc.set(path + "blueY", blueLocation.getY());
 		fc.set(path + "blueZ", blueLocation.getZ());
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arenaName).setSpawn(blueLocation);
+		Arena arena = getArena(arenaName);
+		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setSpawn(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
@@ -250,7 +252,8 @@ public class ArenaManager {
 		fc.set(path + "bbX", blueLocation.getX());
 		fc.set(path + "bbY", blueLocation.getY());
 		fc.set(path + "bbZ", blueLocation.getZ());
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arenaName).setBasket(blueLocation);
+		Arena arena = getArena(arenaName);
+		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setBasket(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
@@ -260,7 +263,8 @@ public class ArenaManager {
 		fc.set(path + "rbX", redLocation.getX());
 		fc.set(path + "rbY", redLocation.getY());
 		fc.set(path + "rbZ", redLocation.getZ());
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arenaName).setBasket(redLocation);
+		Arena arena = getArena(arenaName);
+		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setBasket(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 

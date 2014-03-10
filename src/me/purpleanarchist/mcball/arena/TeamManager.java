@@ -18,20 +18,19 @@ public class TeamManager {
 		return tm;
 	}
 
-	public Team getTeam(TeamColor color, String arenaName) {
-		if (ArenaManager.getManager().getArena(arenaName) != null) {
+	public Team getTeam(TeamColor color, Arena arena) {
 			for (Team team : Team.teamObjects) {
-				if (team.getColor() == color && team.getArena().equals(ArenaManager.getManager().getArena(arenaName).getName())) {
+				if (team.getArena().equals(arena.getName()) && team.getColor().equals(color)) {
 					return team;
 				}
 			}
-		}
 		return null;
 	}
 
 	public void setTeam(Player p, String arenaName) {
-		Team red = getTeam(TeamColor.RED, arenaName);
-		Team blue = getTeam(TeamColor.BLUE, arenaName);
+		Arena arena = ArenaManager.getManager().getArena(arenaName);
+		Team red = getTeam(TeamColor.RED, arena);
+		Team blue = getTeam(TeamColor.BLUE, arena);
 		if (red.getPlayers().size() == blue.getPlayers().size()) {
 			Random rand = new Random();
 			boolean b = rand.nextBoolean();
