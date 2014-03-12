@@ -92,7 +92,7 @@ public class Arena {
 	// To send each player in the arena a message
 	public void sendMessage(String message) {
 		for (String s : players) {
-			Bukkit.getPlayer(s).sendMessage("§7[§cJump§7]: " + message);
+			Bukkit.getPlayer(s).sendMessage("§7[§cMCBall§7]: " + message);
 		}
 	}
 

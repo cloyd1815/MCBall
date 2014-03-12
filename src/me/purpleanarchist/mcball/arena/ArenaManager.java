@@ -1,11 +1,9 @@
 package me.purpleanarchist.mcball.arena;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import me.purpleanarchist.mcball.Main;
-import me.purpleanarchist.mcball.run.Countdown;
-import me.purpleanarchist.mcball.run.MessageSpam;
-import me.purpleanarchist.mcball.run.PlayTime;
 import me.purpleanarchist.mcball.util.ConfigurationAPI;
 import me.purpleanarchist.mcball.util.Util;
 
@@ -17,7 +15,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public class ArenaManager {
 	private static ArenaManager am = new ArenaManager();
@@ -34,6 +31,34 @@ public class ArenaManager {
 			}
 		}
 		return null;
+	}
+	
+	public Team getTeam(String name, TeamColor color) {
+		for (Team team : Team.teamObjects) {
+			if (team.getArena().equals(name)) {
+				if (team.getColor() == color) {
+					return team;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void setTeam(Player p, String arena) {
+		Team red = getTeam(arena, TeamColor.RED);
+		Team blue = getTeam(arena, TeamColor.BLUE);
+		if (red.getPlayers().size() == blue.getPlayers().size()) {
+			Random rand = new Random();
+			boolean b = rand.nextBoolean();
+			if (b)
+				red.getPlayers().add(p.getName());
+			else
+				blue.getPlayers().add(p.getName());
+		} else if (red.getPlayers().size() < blue.getPlayers().size()) {
+			red.getPlayers().add(p.getName());
+		} else {
+			blue.getPlayers().add(p.getName());
+		}
 	}
 
 	public void addPlayers(Player player, String arenaName) {
@@ -56,14 +81,14 @@ public class ArenaManager {
 									+ player.getName() + ChatColor.GREEN
 									+ " has joined the game!");
 							if (arena.getPlayers().size() == 2) {
-								@SuppressWarnings("unused")
-								BukkitTask countdown = new Countdown(plugin,
-										60, arenaName).runTaskTimer(plugin, 0,
-										20);
+//								@SuppressWarnings("unused")
+//								BukkitTask countdown = new Countdown(plugin,
+//										60, arenaName).runTaskTimer(plugin, 0,
+//										20);
 							} else if (arena.getPlayers().size() < 2) {
-								@SuppressWarnings("unused")
-								BukkitTask message = new MessageSpam(plugin,
-										arena).runTaskTimer(plugin, 0, 20 * 10);
+//								@SuppressWarnings("unused")
+//								BukkitTask message = new MessageSpam(plugin,
+//										arena).runTaskTimer(plugin, 0, 20 * 10);
 							}
 						} else {
 							Util.sendMessage(player,
@@ -116,13 +141,13 @@ public class ArenaManager {
 			for (String s : arena.getPlayers()) {
 				Player player = Bukkit.getPlayer(s);
 
-				TeamManager.getManager().setTeam(player, arenaName);
+				setTeam(player, arenaName);
 				player.getInventory().setHeldItemSlot(0);
 				player.teleport(arena.getJoinLocation());
 			}
-			@SuppressWarnings("unused")
-			BukkitTask playtime = new PlayTime(plugin, 60 * 5, arenaName)
-					.runTaskTimer(plugin, 0, 20);
+//			@SuppressWarnings("unused")
+//			BukkitTask playtime = new PlayTime(plugin, 60 * 5, arenaName)
+//					.runTaskTimer(plugin, 0, 20);
 		}
 	}
 
@@ -230,8 +255,7 @@ public class ArenaManager {
 		fc.set(path + "redX", redLocation.getX());
 		fc.set(path + "redY", redLocation.getY());
 		fc.set(path + "redZ", redLocation.getZ());
-		Arena arena = getArena(arenaName);
-		TeamManager.getManager().getTeam(TeamColor.RED, arena).setSpawn(redLocation);
+		getTeam(arenaName, TeamColor.RED).setSpawn(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}	
 	
@@ -241,30 +265,27 @@ public class ArenaManager {
 		fc.set(path + "blueX", blueLocation.getX());
 		fc.set(path + "blueY", blueLocation.getY());
 		fc.set(path + "blueZ", blueLocation.getZ());
-		Arena arena = getArena(arenaName);
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setSpawn(blueLocation);
+		getTeam(arenaName, TeamColor.BLUE).setSpawn(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
 	public void setBlueBasket(String arenaName, Location blueLocation) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		String path = "arenas." + arenaName + ".";
-		fc.set(path + "bbX", blueLocation.getX());
-		fc.set(path + "bbY", blueLocation.getY());
-		fc.set(path + "bbZ", blueLocation.getZ());
-		Arena arena = getArena(arenaName);
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setBasket(blueLocation);
+		fc.set(path + "bbX", blueLocation.getBlockX());
+		fc.set(path + "bbY", blueLocation.getBlockY());
+		fc.set(path + "bbZ", blueLocation.getBlockZ());
+		getTeam(arenaName, TeamColor.BLUE).setBasket(blueLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 
 	public void setRedBasket(String arenaName, Location redLocation) {
 		FileConfiguration fc = ConfigurationAPI.getConfig(plugin, "arenas.yml");
 		String path = "arenas." + arenaName + ".";
-		fc.set(path + "rbX", redLocation.getX());
-		fc.set(path + "rbY", redLocation.getY());
-		fc.set(path + "rbZ", redLocation.getZ());
-		Arena arena = getArena(arenaName);
-		TeamManager.getManager().getTeam(TeamColor.BLUE, arena).setBasket(redLocation);
+		fc.set(path + "rbX", redLocation.getBlockX());
+		fc.set(path + "rbY", redLocation.getBlockY());
+		fc.set(path + "rbZ", redLocation.getBlockZ());
+		getTeam(arenaName, TeamColor.BLUE).setBasket(redLocation);
 		ConfigurationAPI.saveConfig(plugin, "arenas.yml");
 	}
 

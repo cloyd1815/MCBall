@@ -18,17 +18,18 @@ public class TeamManager {
 		return tm;
 	}
 
-	public Team getTeam(TeamColor color, Arena arena) {
-			for (Team team : Team.teamObjects) {
-				if (team.getArena().equals(arena.getName()) && team.getColor().equals(color)) {
+	public Team getTeam(TeamColor color, String name) {
+		for (Team team : Team.teamObjects) {
+			if (team.getArena().equals(name)) {
+				if (team.getColor() == color) {
 					return team;
 				}
 			}
+		}
 		return null;
 	}
 
-	public void setTeam(Player p, String arenaName) {
-		Arena arena = ArenaManager.getManager().getArena(arenaName);
+	public void setTeam(Player p, String arena) {
 		Team red = getTeam(TeamColor.RED, arena);
 		Team blue = getTeam(TeamColor.BLUE, arena);
 		if (red.getPlayers().size() == blue.getPlayers().size()) {

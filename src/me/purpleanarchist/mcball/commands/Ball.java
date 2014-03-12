@@ -5,7 +5,6 @@ import me.purpleanarchist.mcball.arena.Arena;
 import me.purpleanarchist.mcball.arena.ArenaManager;
 import me.purpleanarchist.mcball.arena.Team;
 import me.purpleanarchist.mcball.arena.TeamColor;
-import me.purpleanarchist.mcball.arena.TeamManager;
 import me.purpleanarchist.mcball.util.Util;
 
 import org.bukkit.Bukkit;
@@ -158,36 +157,15 @@ public class Ball implements CommandExecutor {
 					} else if (args[0].equalsIgnoreCase("redbasket")) {
 						for (Arena arena : Arena.arenaObjects) {
 							if (args[1].equalsIgnoreCase(arena.getName())) {
-								for (Team team : Team.teamObjects) {
-									if (team.getArena().equals(arena.getName())) {
-										if (team.getColor().equals(
-												TeamColor.RED)) {
-											TeamManager.getManager().setBasket(
-													team, arena.getName(),
-													p.getLocation());
-											Util.sendMessage(p,
-													"Saved that locaion!");
-
-										}
-									}
-								}
+								ArenaManager.getManager().setRedBasket(
+										arena.getName(), p.getLocation());
 							}
 						}
 					} else if (args[0].equalsIgnoreCase("bluebasket")) {
 						for (Arena arena : Arena.arenaObjects) {
 							if (args[1].equalsIgnoreCase(arena.getName())) {
-								for (Team team : Team.teamObjects) {
-									if (team.getArena().equals(arena.getName())) {
-										if (team.getColor().equals(
-												TeamColor.BLUE)) {
-											TeamManager.getManager().setBasket(
-													team, arena.getName(),
-													p.getLocation());
-											Util.sendMessage(p,
-													"Saved that locaion!");
-										}
-									}
-								}
+								ArenaManager.getManager().setBlueBasket(
+										arena.getName(), p.getLocation());
 							}
 						}
 					} else {
@@ -203,12 +181,21 @@ public class Ball implements CommandExecutor {
 						for (Arena arena : Arena.arenaObjects) {
 							sender.sendMessage("Arena : " + arena.getName());
 							sender.sendMessage("Teams: ");
-							for (Team team : Team.teamObjects) {
-								if (team.getArena().equals(arena.getName())) {
-									sender.sendMessage("Team : "
-											+ team.getColor().toString());
-								}
-							}
+							Team red = ArenaManager.getManager().getTeam(
+									arena.getName(), TeamColor.RED);
+							Team blue = ArenaManager.getManager().getTeam(
+									arena.getName(), TeamColor.BLUE);
+							sender.sendMessage(red.getColor().toString());
+							sender.sendMessage(blue.getColor().toString());
+							// for (Team team : Team.teamObjects) {
+							// if (team.getArena().equals(arena.getName())) {
+							// if (team.getColor() == TeamColor.RED) {
+							// sender.sendMessage("RED!!!");
+							// } else if (team.getColor() == TeamColor.BLUE) {
+							// sender.sendMessage("BLUE!!");
+							// }
+							// }
+							// }
 						}
 					}
 				}
