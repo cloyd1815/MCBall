@@ -31,9 +31,9 @@ public class PlayerListener implements Listener {
 					if (arena.getPlayers().contains(player.getName())) {
 						if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)
 								|| e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-							double x = player.getLocation().getX() + 1;
+							double x = player.getLocation().getX();
 							double y = player.getLocation().getY() + 1;
-							double z = player.getLocation().getZ() + 1;
+							double z = player.getLocation().getZ();
 							Vector vector = player.getLocation().getDirection()
 									.multiply(1.5);
 							Location spawnLoc = new Location(player.getWorld(),

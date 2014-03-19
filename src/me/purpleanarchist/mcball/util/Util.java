@@ -4,6 +4,7 @@ import me.purpleanarchist.mcball.arena.ArenaManager;
 import me.purpleanarchist.mcball.arena.Team;
 import me.purpleanarchist.mcball.arena.TeamColor;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Entity;
@@ -27,9 +28,11 @@ public class Util {
 		if (entity.isOnGround()) {
 			if (entity.getLocation() == blue.getBasket()) {
 				blue.setScore(bs + 1);
+				Bukkit.getServer().broadcastMessage("Red Scored!");
 				entity.setHealth(0.0);
 			} else if (entity.getLocation() == red.getBasket()) {
 				red.setScore(rs + 1);
+				Bukkit.getServer().broadcastMessage("Red Scored!");
 				entity.setHealth(0.0);
 			} else {
 				entity.setHealth(0.0);
